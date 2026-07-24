@@ -177,6 +177,7 @@ npm run build          # Compila TypeScript a dist/
 npm test               # Ejecuta pruebas unitarias e integración
 npm run test:coverage  # Reporte de cobertura
 npm run lint           # Verificación de tipos
+npm run example        # Ejecuta example.ts
 ```
 
 ## Ejemplo completo

@@ -2,8 +2,7 @@
  * Ejemplo de uso de resilient-fetch.
  *
  * Ejecutar con:
- *   npm run build
- *   npx ts-node example.ts
+ *   npm run example
  */
 import { createFetchClient, FetchClientError, TimeoutError } from './src';
 
