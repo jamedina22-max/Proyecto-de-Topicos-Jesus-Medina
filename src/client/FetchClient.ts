@@ -10,10 +10,6 @@ import {
 } from '../types';
 import { AspectChain, buildUrl, serializeBody } from '../utils/helpers';
 
-/**
- * Cliente HTTP de alto nivel construido sobre fetch nativo.
- * Aplica aspectos transversales (timeout y reintentos) mediante AOP.
- */
 export class FetchClient {
   private readonly config: Required<
     Pick<FetchClientConfig, 'retries' | 'retryDelay'>
@@ -23,11 +19,7 @@ export class FetchClient {
   private readonly aspectChain: AspectChain;
   private readonly fetchExecutor: FetchExecutor;
 
-  /**
-   * Crea una instancia del cliente HTTP.
-   * @param config - Configuración global del cliente.
-   * @param fetchExecutor - Implementación de fetch inyectable (útil en pruebas).
-   */
+
   constructor(
     config: FetchClientConfig = {},
     fetchExecutor: FetchExecutor = globalThis.fetch.bind(globalThis)
@@ -44,38 +36,21 @@ export class FetchClient {
     ]);
   }
 
-  /**
-   * Realiza una petición GET.
-   * @param path - Ruta o URL de destino.
-   * @param options - Opciones adicionales de la petición.
-   */
+ 
   public get(path: string, options: RequestOptions = {}): Promise<Response> {
     return this.request('GET', path, options);
   }
 
-  /**
-   * Realiza una petición POST.
-   * @param path - Ruta o URL de destino.
-   * @param options - Opciones adicionales de la petición.
-   */
+
   public post(path: string, options: RequestOptions = {}): Promise<Response> {
     return this.request('POST', path, options);
   }
 
-  /**
-   * Realiza una petición PUT.
-   * @param path - Ruta o URL de destino.
-   * @param options - Opciones adicionales de la petición.
-   */
+  
   public put(path: string, options: RequestOptions = {}): Promise<Response> {
     return this.request('PUT', path, options);
   }
 
-  /**
-   * Realiza una petición PATCH.
-   * @param path - Ruta o URL de destino.
-   * @param options - Opciones adicionales de la petición.
-   */
   public patch(
     path: string,
     options: RequestOptions = {}
@@ -83,11 +58,7 @@ export class FetchClient {
     return this.request('PATCH', path, options);
   }
 
-  /**
-   * Realiza una petición DELETE.
-   * @param path - Ruta o URL de destino.
-   * @param options - Opciones adicionales de la petición.
-   */
+  
   public delete(
     path: string,
     options: RequestOptions = {}
@@ -95,12 +66,7 @@ export class FetchClient {
     return this.request('DELETE', path, options);
   }
 
-  /**
-   * Ejecuta una petición HTTP genérica.
-   * @param method - Método HTTP.
-   * @param path - Ruta o URL de destino.
-   * @param options - Opciones de la petición.
-   */
+
   public request(
     method: HttpMethod,
     path: string,
@@ -129,10 +95,7 @@ export class FetchClient {
     return this.aspectChain.execute(context, () => this.executeFetch(context));
   }
 
-  /**
-   * Ejecuta fetch con el contexto ya preparado por los aspectos.
-   * @param context - Contexto final de la petición.
-   */
+ 
   private async executeFetch(context: RequestContext): Promise<Response> {
     try {
       const init: RequestInit = {
@@ -161,10 +124,7 @@ export class FetchClient {
   }
 }
 
-/**
- * Factory Method para crear instancias configuradas del cliente.
- * @param config - Configuración inicial del cliente.
- */
+
 export function createFetchClient(config?: FetchClientConfig): FetchClient {
   return new FetchClient(config);
 }
