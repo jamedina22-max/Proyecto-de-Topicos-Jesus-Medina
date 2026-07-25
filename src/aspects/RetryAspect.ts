@@ -6,19 +6,11 @@ import {
 } from '../errors/FetchClientError';
 import { RequestAspect, RequestContext } from '../types';
 
-/**
- * Aspecto AOP que reintenta peticiones fallidas por errores 5xx o de red.
- * Implementa una estrategia de reintento con backoff exponencial simple.
- */
 export class RetryAspect implements RequestAspect {
   /** @inheritdoc */
   public readonly name = 'RetryAspect';
 
-  /**
-   * Ejecuta la petición reintentando hasta agotar los intentos configurados.
-   * @param context - Contexto de la petición.
-   * @param next - Siguiente eslabón de la cadena.
-   */
+ 
   public async execute(
     context: RequestContext,
     next: () => Promise<Response>
