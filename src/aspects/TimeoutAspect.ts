@@ -2,11 +2,16 @@ import { mergeAbortSignals } from '../utils/helpers';
 import { RequestAspect, RequestContext } from '../types';
 import { TimeoutError } from '../errors/FetchClientError';
 
+/** Aspecto que cancela la petición si supera el timeout configurado en el contexto. */
 export class TimeoutAspect implements RequestAspect {
 
   public readonly name = 'TimeoutAspect';
 
- 
+  /**
+   * Envuelve la ejecución con un temporizador de aborto.
+   * @param context - Contexto de la petición.
+   * @param next - Siguiente función en la cadena.
+   */
   public async execute(
     context: RequestContext,
     next: () => Promise<Response>

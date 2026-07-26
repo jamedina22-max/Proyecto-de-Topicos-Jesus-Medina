@@ -1,5 +1,5 @@
 {
-  "name": "resilient-fetch",
+  "name": "smartfetch",
   "version": "1.0.0",
   "description": "Wrapper avanzado sobre fetch con timeout, reintentos y API limpia",
   "main": "dist/index.js",
@@ -24,7 +24,7 @@
     "timeout",
     "typescript"
   ],
-  "author": "",
+  "author": "Jesus Medina",
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^29.5.14",

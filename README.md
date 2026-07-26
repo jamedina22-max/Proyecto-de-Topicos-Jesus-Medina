@@ -1,4 +1,4 @@
-# resilient-fetch
+# SmartFetch
 
 Wrapper avanzado sobre `fetch` nativo para Node.js y navegadores. Ofrece una API limpia similar a axios, con **timeout**, **reintentos automáticos** y soporte completo de TypeScript, sin dependencias de terceros en tiempo de ejecución.
 
@@ -15,14 +15,14 @@ Wrapper avanzado sobre `fetch` nativo para Node.js y navegadores. Ofrece una API
 ## Instalación
 
 ```bash
-npm install resilient-fetch
+npm install smartfetch
 ```
 
 Para desarrollo local desde este repositorio:
 
 ```bash
-git clone https://github.com/tu-usuario/resilient-fetch.git
-cd resilient-fetch
+git clone https://github.com/jamedina22-max/Proyecto-de-Topicos-Jesus-Medina.git
+cd Proyecto-de-Topicos-Jesus-Medina
 npm install
 npm run build
 ```
@@ -32,7 +32,7 @@ npm run build
 ### TypeScript / Node.js
 
 ```typescript
-import { createFetchClient } from 'resilient-fetch';
+import { createFetchClient } from 'smartfetch';
 
 const client = createFetchClient({
   baseURL: 'https://api.example.com',
@@ -49,7 +49,7 @@ const client = createFetchClient({
 ### JavaScript (CommonJS)
 
 ```javascript
-const { createFetchClient } = require('resilient-fetch');
+const { createFetchClient } = require('smartfetch');
 
 const client = createFetchClient({
   baseURL: 'https://api.example.com',
@@ -150,7 +150,7 @@ La librería expone errores tipados:
 - `TimeoutError`: la petición superó el tiempo límite
 
 ```typescript
-import { FetchClientError, TimeoutError } from 'resilient-fetch';
+import { FetchClientError, TimeoutError } from 'smartfetch';
 
 try {
   await client.get('/slow-endpoint');

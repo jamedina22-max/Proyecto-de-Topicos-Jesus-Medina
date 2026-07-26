@@ -1,3 +1,4 @@
+/** Error general lanzado por el cliente cuando una petición falla. */
 export class FetchClientError extends Error {
   public readonly status?: number;
   public readonly url: string;
@@ -28,6 +29,7 @@ export class FetchClientError extends Error {
   }
 }
 
+/** Error lanzado cuando una petición supera el tiempo máximo de espera configurado. */
 export class TimeoutError extends FetchClientError {
   public readonly timeoutMs: number;
 
@@ -42,10 +44,18 @@ export class TimeoutError extends FetchClientError {
   }
 }
 
+/**
+ * Indica si un código de estado HTTP debe provocar un reintento.
+ * @param status - Código de estado HTTP.
+ */
 export function isRetryableStatus(status: number): boolean {
   return status >= 500 && status < 600;
 }
 
+/**
+ * Indica si un error de red debe provocar un reintento.
+ * @param error - Error capturado durante la petición.
+ */
 export function isRetryableNetworkError(error: unknown): boolean {
   if (error instanceof FetchClientError && error.cause !== undefined) {
     return isRetryableNetworkError(error.cause);
@@ -66,6 +76,10 @@ export function isRetryableNetworkError(error: unknown): boolean {
   return false;
 }
 
+/**
+ * Devuelve una promesa que se resuelve después de {@link ms} milisegundos.
+ * @param ms - Tiempo de espera en milisegundos.
+ */
 export function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }

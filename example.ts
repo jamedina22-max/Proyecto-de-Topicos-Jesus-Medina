@@ -1,9 +1,4 @@
-/**
- * Ejemplo de uso de resilient-fetch.
- *
- * Ejecutar con:
- *   npm run example
- */
+
 import { createFetchClient, FetchClientError, TimeoutError } from './src';
 
 async function main(): Promise<void> {

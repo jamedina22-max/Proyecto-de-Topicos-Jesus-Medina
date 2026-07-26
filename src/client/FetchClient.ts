@@ -10,6 +10,9 @@ import {
 } from '../types';
 import { AspectChain, buildUrl, serializeBody } from '../utils/helpers';
 
+/**
+ * Cliente HTTP avanzado sobre fetch nativo con soporte de timeout y reintentos.
+ */
 export class FetchClient {
   private readonly config: Required<
     Pick<FetchClientConfig, 'retries' | 'retryDelay'>
@@ -19,7 +22,10 @@ export class FetchClient {
   private readonly aspectChain: AspectChain;
   private readonly fetchExecutor: FetchExecutor;
 
-
+  /**
+   * @param config - Configuración global del cliente (baseURL, timeout, retries, etc.).
+   * @param fetchExecutor - Implementación de fetch (por defecto globalThis.fetch).
+   */
   constructor(
     config: FetchClientConfig = {},
     fetchExecutor: FetchExecutor = globalThis.fetch.bind(globalThis)
@@ -36,21 +42,39 @@ export class FetchClient {
     ]);
   }
 
- 
+
+  /**
+   * Realiza una petición GET.
+   * @param path - Ruta relativa o absoluta.
+   * @param options - Opciones de la petición.
+   */
   public get(path: string, options: RequestOptions = {}): Promise<Response> {
     return this.request('GET', path, options);
   }
 
-
+  /**
+   * Realiza una petición POST.
+   * @param path - Ruta relativa o absoluta.
+   * @param options - Opciones de la petición (incluye body).
+   */
   public post(path: string, options: RequestOptions = {}): Promise<Response> {
     return this.request('POST', path, options);
   }
 
-  
+  /**
+   * Realiza una petición PUT.
+   * @param path - Ruta relativa o absoluta.
+   * @param options - Opciones de la petición (incluye body).
+   */
   public put(path: string, options: RequestOptions = {}): Promise<Response> {
     return this.request('PUT', path, options);
   }
 
+  /**
+   * Realiza una petición PATCH.
+   * @param path - Ruta relativa o absoluta.
+   * @param options - Opciones de la petición (incluye body).
+   */
   public patch(
     path: string,
     options: RequestOptions = {}
@@ -58,7 +82,11 @@ export class FetchClient {
     return this.request('PATCH', path, options);
   }
 
-  
+  /**
+   * Realiza una petición DELETE.
+   * @param path - Ruta relativa o absoluta.
+   * @param options - Opciones de la petición.
+   */
   public delete(
     path: string,
     options: RequestOptions = {}
@@ -67,6 +95,12 @@ export class FetchClient {
   }
 
 
+  /**
+   * Realiza una petición HTTP con el método indicado.
+   * @param method - Método HTTP (GET, POST, PUT, PATCH, DELETE).
+   * @param path - Ruta relativa o absoluta.
+   * @param options - Opciones de la petición.
+   */
   public request(
     method: HttpMethod,
     path: string,
@@ -95,7 +129,11 @@ export class FetchClient {
     return this.aspectChain.execute(context, () => this.executeFetch(context));
   }
 
- 
+
+  /**
+   * Ejecuta el fetch nativo con el contexto dado.
+   * @param context - Contexto interno de la petición.
+   */
   private async executeFetch(context: RequestContext): Promise<Response> {
     try {
       const init: RequestInit = {
@@ -125,6 +163,10 @@ export class FetchClient {
 }
 
 
+/**
+ * Crea y retorna una nueva instancia de {@link FetchClient}.
+ * @param config - Configuración opcional del cliente.
+ */
 export function createFetchClient(config?: FetchClientConfig): FetchClient {
   return new FetchClient(config);
 }
